@@ -225,7 +225,7 @@ class graph_creator():
 		pickle.dump([self.edges, self.node_locations], afile)
 		afile.close()		
 
-	def build_graph_from_csv(self, csv_filename='tiles_jec5312.csv'):
+	def build_graph_from_csv(self, csv_filename='tiles_226.csv'):
 		script_dir = os.path.dirname(__file__)
 		map_path = script_dir + '/../../src/maps/' + csv_filename
 		with open(map_path + '.csv', 'rb') as f:
@@ -340,10 +340,11 @@ class graph_creator():
         ["58", "581",  'f'], ["581", "582",  'f'], ["582", "583",  'f'], ["583", "584",  'f'], ["584", "41",  'f']]
 
 		return node_locations, edges
- 
+ `
 if __name__ == "__main__":
     gc = graph_creator()
-    duckietown_graph = gc.build_graph_from_csv(csv_filename='tiles_jec5312.csv')
+    duckietown_graph = gc.build_graph_from_csv(csv_filename='tiles_226.csv')
+		#duckietown_graph = gc.build_graph_from_csv(csv_filename='tiles_jec5312.csv')
     # Node locations (for visual representation) and heuristics calculation
     #node_locations, edges = gc.get_map_226()
     #gc.add_node_locations(node_locations)
