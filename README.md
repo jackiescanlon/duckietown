@@ -1,4 +1,4 @@
-Jackie and Kyle's Duckietown - Group 17
+Jackie and Nick's Duckietown - Group 17
 
 Quick Reference
 
