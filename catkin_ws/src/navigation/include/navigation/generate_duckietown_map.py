@@ -340,7 +340,7 @@ class graph_creator():
         ["58", "581",  'f'], ["581", "582",  'f'], ["582", "583",  'f'], ["583", "584",  'f'], ["584", "41",  'f']]
 
 		return node_locations, edges
- `
+
 if __name__ == "__main__":
     gc = graph_creator()
     duckietown_graph = gc.build_graph_from_csv(csv_filename='tiles_226.csv')
