@@ -343,13 +343,13 @@ class graph_creator():
  
 if __name__ == "__main__":
     gc = graph_creator()
-    duckietown_graph = gc.build_graph_from_csv(csv_filename='tiles_226.csv')
+    duckietown_graph = gc.build_graph_from_csv(csv_filename='tiles_jec5312.csv')
     # Node locations (for visual representation) and heuristics calculation
     #node_locations, edges = gc.get_map_226()
     #gc.add_node_locations(node_locations)
     #gc.add_edges(edges)
     #gc.pickle_save()
-    duckietown_graph.draw(map_name='duckietown_226')
+    duckietown_graph.draw(map_name='duckietown_jec5312')
 
 
 
