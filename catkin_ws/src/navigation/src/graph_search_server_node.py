@@ -38,7 +38,7 @@ class graph_search_server():
 
     def handle_graph_search(self,req):
 	    # Checking if nodes exists
-				print self.duckietown_graph._nodes
+			  print self.duckietown_graph._nodes
         if (req.source_node not in self.duckietown_graph) or (req.target_node not in self.duckietown_graph):
             print "Source or target node do not exist."
             self.publishImage(req, [])
