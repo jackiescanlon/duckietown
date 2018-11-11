@@ -225,7 +225,7 @@ class graph_creator():
 		pickle.dump([self.edges, self.node_locations], afile)
 		afile.close()		
 
-	def build_graph_from_csv(self, csv_filename='tiles_226.csv'):
+	def build_graph_from_csv(self, csv_filename='tiles_jec5312.csv'):
 		script_dir = os.path.dirname(__file__)
 		map_path = script_dir + '/../../src/maps/' + csv_filename
 		with open(map_path + '.csv', 'rb') as f:

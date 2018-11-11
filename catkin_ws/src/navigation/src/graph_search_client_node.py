@@ -8,7 +8,7 @@ def graph_search_client():
     rospy.wait_for_service('graph_search')
     try:
         graph_search = rospy.ServiceProxy('graph_search', GraphSearch)
-        resp = graph_search('I15', 'I26')
+        resp = graph_search('I0', 'I1')
         return resp.actions
     except rospy.ServiceException, e:
         print "Service call failed: %s"%e
