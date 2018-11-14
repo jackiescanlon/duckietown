@@ -24,7 +24,7 @@ class graph_search_server():
         gc = graph_creator()
         self.duckietown_graph = gc.build_graph_from_csv(csv_filename=self.map_name)
         self.duckietown_problem = GraphSearchProblem(self.duckietown_graph, None, None)
-    
+
         print "Map loaded successfully!\n"
 
         self.image_pub = rospy.Publisher("~map_graph",Image, queue_size = 1, latch=True)
@@ -37,8 +37,8 @@ class graph_search_server():
         self.image_pub.publish(self.bridge.cv2_to_imgmsg(overlay, "bgr8"))
 
     def handle_graph_search(self,req):
-	# Checking if nodes exists
-	print self.duckietown_graph._nodes
+        # Checking if nodes exists
+        print self.duckietown_graph._nodes
         if (req.source_node not in self.duckietown_graph) or (req.target_node not in self.duckietown_graph):
             print "Source or target node do not exist."
             self.publishImage(req, [])

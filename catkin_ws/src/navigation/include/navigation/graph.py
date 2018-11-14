@@ -23,7 +23,8 @@ class Edge(object):
         return self.source == other.source and self.target == other.target \
             and self.weight == other.weight and self.action == other.action
     def __repr__(self):
-        return "Edge(%r,%r,%r)" % (self.source, self.target, self.weight, self.action)
+        #return "Edge(%r,%r,%r)" % (self.source, self.target, self.weight, self.action)
+        return "Edge(%r,%r,%r)" % (self.source, self.target, self.action)
 
 
 class Graph(object):
@@ -115,7 +116,9 @@ class Graph(object):
                 g.edge(self.node_label_fn(src_node), self.node_label_fn(e.target), taillabel=t , color = c, penwidth = p)
         
         #script_dir = os.path.dirname(__file__)
+        print script_dir
         map_path = script_dir + '/maps/'
+        print map_path
         g.format = 'png'
         g.render(filename=map_name, directory=map_path, view=False, cleanup=True)
         
