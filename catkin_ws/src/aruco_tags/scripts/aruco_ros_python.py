@@ -1,8 +1,12 @@
 #!/usr/bin/env python
 # Simple ros Aruco example. Subscribes to the camera and does stuff
 import rospy
+import sys
+import time
+import cv2
+import numpy as np
 from std_msgs.msg import String
-
+#from sensor_msgs.msg import CompressedImage
 def callback(data):
     rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
     
@@ -16,8 +20,8 @@ def listener():
     rospy.init_node('listener', anonymous=True)
     #rospy.init_node('test_listener', anonymous=True)
     # change this to subscripe to camera whatever
-    rospy.Subscriber("/howard17/camera_node/image/compressed", String, callback)
-    #rospy.Subscriber("
+    #rospy.Subscriber("/howard17/camera_node/image/compressed", sensor_msgs/CompressedImage, callback)
+    rospy.Subscriber("/howard17/camera_node/image/compressed", std_msgs/String, callback)
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
     
