@@ -43,8 +43,9 @@ class ObstacleSafetyNode:
         projection_list.list = []
         projection_list.header = detections_msg.header
 
-        minDist = 999999999999999999999999.0
-        dists = []
+        #minDist = 999999999999999999999999.0
+        minDist = 10
+	dists = []
         width = detections_msg.imwidth
         height = detections_msg.imheight
         too_close = False
