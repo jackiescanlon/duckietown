@@ -6,35 +6,26 @@ import time
 import cv2
 import numpy as np
 from std_msgs.msg import String
-#from sensor_msgs.msg import CompressedImage
+from sensor_msgs.msg import CompressedImage
+
 def callback(data):
-    rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
-    
+    #rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+    rospy.loginfo("Received camera stream");
+    cv_image = bridge.compressed_imgmsg_to_cv2(data, desired_encoding="passthrough")    
+    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    cv2.imshow('data', gray)
+
 def listener():
 
-    # In ROS, nodes are uniquely named. If two nodes with the same
-    # node are launched, the previous one is kicked off. The
-    # anonymous=True flag means that rospy will choose a unique
-    # name for our 'listener' node so that multiple listeners can
-    # run simultaneously.
-    rospy.init_node('listener', anonymous=True)
-    #rospy.init_node('test_listener', anonymous=True)
-    # change this to subscripe to camera whatever
-    #rospy.Subscriber("/howard17/camera_node/image/compressed", sensor_msgs/CompressedImage, callback)
-    rospy.Subscriber("/howard17/camera_node/image/compressed", std_msgs/String, callback)
-    # spin() simply keeps python from exiting until this node is stopped
+    rospy.init_node('aruco_listener')
+    #rospy.Subscriber('chatter', String, callback)
+    rospy.Subscriber('/howard17/camera_node/image/compressed', CompressedImage, callback)
     rospy.spin()
-    
-    # our code here?
-    
-    
+     
 
 if __name__ == '__main__':
     listener()
     
-    # launch the camera: roslaunch camera_node.launch veh:=howard17
-    # rosrun rqt_graph rqt_graph --> look for what the camera publishes to maybe?
-    # Put these files, idk somewhere?
-    # launch the camera: roslaunch ros
-    # rosrun duckietown ArucoRosPython.py ?
+    # launch the camera: roslaunch pi_camera camera_node.launch veh:=howard17
+    # rosrun aruco_tags aruco_ros_python.py
     
