@@ -14,7 +14,8 @@ def talker():
     rospy.init_node('aruco_talker')
     rate = rospy.Rate(10) # 10hz
     br = CvBridge()
-    cap = cv2.VideoCapture('test1.mp4')
+    #cap = cv2.VideoCapture('test1.mp4')
+    cap = cv2.VideoCapture(0)
     #print('Got the cap')
     #cap = cv2.VideoCapture(0)
     while not rospy.is_shutdown():
