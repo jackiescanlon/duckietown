@@ -2,7 +2,7 @@
 
 	<arg name="marker1Id"         default="1"/>
     	<arg name="marker2Id"         default="2"/>
-	<arg name="markerSize" default="0.1"/> <!-- in meter -->
+	<arg name="markerSize" default="0.07"/> <!-- in meter -->
 	<arg name="eye"               default="left"/>
 	<arg name="dct_normalization" default="True" />
 	<arg name="dct_filter_size"   default="2" />
