@@ -1,5 +1,6 @@
 import pickle, csv, os
 import numpy as np
+
 from graph import Graph
 
 class Node():
@@ -356,8 +357,6 @@ if __name__ == "__main__":
     scriptLoc = os.path.dirname(__file__)
     mapLoc = scriptLoc[0:len(scriptLoc)-18] + "src"
     duckietown_graph.draw(mapLoc,map_name='duckietown_jec5312')
-
-
 
 
 

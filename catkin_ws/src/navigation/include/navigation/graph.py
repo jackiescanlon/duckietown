@@ -33,7 +33,14 @@ class Graph(object):
         self._edges = dict()
         self.node_label_fn = node_label_fn if node_label_fn else lambda x: x
         self.node_positions = dict()
-
+    def copy(self):
+        r_graph = Graph()
+        r_graph._nodes = self._nodes
+        r_graph._edges = self._edges
+        r_graph.node_label_fn = self.node_label_fn
+        r_graph.node_positions = self.node_positions
+        return r_graph
+    
     def __contains__(self, node):
         return node in self._nodes
 
@@ -95,8 +102,8 @@ class Graph(object):
                 g.node(name=node_name, pos=node_pos, color='red', shape='circle') #blue
             elif node_name[0:4] == 'turn':
                 g.node(name=node_name, pos=node_pos, fixedsize='true', width='0', height='0', style='invis', label="")
-            elif (int(node_name) % 2) == 0:
-                g.node(name=node_name, pos=node_pos, fixedsize='true', width='0', height='0', style='invis', label="")
+            #elif (int(node_name) % 2) == 0:
+            #    g.node(name=node_name, pos=node_pos, fixedsize='true', width='0', height='0', style='invis', label="")
             else:
                 g.node(name=node_name, pos=node_pos)
         for src_node, edges in self._edges.items():
@@ -116,9 +123,9 @@ class Graph(object):
                 g.edge(self.node_label_fn(src_node), self.node_label_fn(e.target), taillabel=t , color = c, penwidth = p)
         
         #script_dir = os.path.dirname(__file__)
-        print script_dir
+        #print script_dir
         map_path = script_dir + '/maps/'
-        print map_path
+        #print map_path
         g.format = 'png'
         g.render(filename=map_name, directory=map_path, view=False, cleanup=True)
         
