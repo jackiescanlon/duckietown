@@ -1,5 +1,6 @@
 # Initail state of the FSM
-initial_state: "LANE_FOLLOWING_AVOID"
+# AVOID_OBSTACLE, LANE_FOLLOWING_AVOID?
+initial_state: "AVOID_OBSTACLE"
 
 events: #Maps from subscribing topic to signal ids
   joystick_override_on: 

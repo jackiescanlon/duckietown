@@ -326,7 +326,7 @@
 				<arg name="param_file_name" value="$(arg param_file_name)"/>
 			</include>
 		</group>
-		/>
+		-->
 
 		<!-- Object Safety -->
 		<group if="$(arg /obstacle_avoidance/safety)">
@@ -339,6 +339,7 @@
 			</include>
 			-->
 			<include file="$(find aruco_tags)/launch/aruco_duckie.launch">
+			</include>
 		</group>
 
 		<!-- Simple Stop Controller -->
