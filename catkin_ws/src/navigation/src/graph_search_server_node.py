@@ -24,7 +24,9 @@ class graph_search_server():
         gc = graph_creator()
         self.duckietown_graph = gc.build_graph_from_csv(csv_filename=self.map_name)
         self.duckietown_problem = GraphSearchProblem(self.duckietown_graph, None, None)
-
+        
+        self.graph2rparam(self.duckietown_graph);
+               
         print "Map loaded successfully!\n"
 
         self.image_pub = rospy.Publisher("~map_graph",Image, queue_size = 1, latch=True)
@@ -35,10 +37,29 @@ class graph_search_server():
         cv_image = cv2.imread(self.map_path + '.png', cv2.CV_LOAD_IMAGE_COLOR)
         overlay = self.prepImage(cv_image)
         self.image_pub.publish(self.bridge.cv2_to_imgmsg(overlay, "bgr8"))
+    
+    def rparam2graph():
+        return Graph(None, rospy.get_param("duckie_graph_nodes"), rospy.get_param("duckie_graph_edges"), set(rospy.get_param("duckie_graph_pos")))
+            
+    def graph2rparam(gr):
+        rospy.set_param("duckie_graph_edges",gr._edges)
+        rospy.set_param("duckie_graph_pos",gr.node_positions)
+        rospy.set_param("duckie_graph_nodes",list(gr._nodes))       
+
+    def setupParameter(self,param_name,default_value):
+        value = rospy.get_param(param_name,default_value)
+        rospy.set_param(param_name,value) #Write to parameter server for transparancy
+        rospy.loginfo("[%s] %s = %s " %(self.node_name,param_name,value))
+        return value
 
     def handle_graph_search(self,req):
+        
+        # update map to new ros param
+        self.duckietown_graph = rparam2graph()
+        self.duckietown_problem.graph = self.duckietown_graph
+        
         # Checking if nodes exists
-        print self.duckietown_graph._nodes
+        #print self.duckietown_graph._nodes
         if (req.source_node not in self.duckietown_graph) or (req.target_node not in self.duckietown_graph):
             print "Source or target node do not exist."
             self.publishImage(req, [])

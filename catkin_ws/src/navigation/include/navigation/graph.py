@@ -28,11 +28,12 @@ class Edge(object):
 
 
 class Graph(object):
-    def __init__(self, node_label_fn=None):
-        self._nodes = set()
-        self._edges = dict()
+    def __init__(self, node_label_fn=None, nodes=set(), edges=dict(), node_positions_=dict()):
+        self._nodes = nodes
+        self._edges = edges
         self.node_label_fn = node_label_fn if node_label_fn else lambda x: x
-        self.node_positions = dict()
+        self.node_positions = node_positions_
+        
     def copy(self):
         r_graph = Graph()
         r_graph._nodes = self._nodes
