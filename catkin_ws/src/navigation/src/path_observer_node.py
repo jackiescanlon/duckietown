@@ -17,12 +17,7 @@ class PathObserverNode():
         self.node_name = rospy.get_name()
 
         # Parameters: - copied from ActionsDispatcherNode, unsure what this should be
-        """
-        self.fsm_mode = self.setupParameter("~initial_mode","JOYSTICK_CONTROL")
-        self.localization_mode = self.setupParameter("~localization_mode","LOCALIZATION")
-        self.trigger_mode = self.setupParameter("~trigger_mode","INTERSECTION_CONTROL")
-        self.reset_mode = self.setupParameter("~reset_mode","JOYSTICK_CONTROL")
-        """
+       
         # graph_search_server_node must initialize BEFORE this code runs!
         self.wgraph = rparam2graph()
         
@@ -84,6 +79,8 @@ class PathObserverNode():
             if edge.action == actionLUT[data]:            
                 self.current_node = edge.target
                 break
+            
+        rospy.loginfo('reached node %s',self.current_node)
     
     def rparam2graph():
         return Graph(None, rospy.get_param("duckie_graph_nodes"), rospy.get_param("duckie_graph_edges"), set(rospy.get_param("duckie_graph_pos")))
