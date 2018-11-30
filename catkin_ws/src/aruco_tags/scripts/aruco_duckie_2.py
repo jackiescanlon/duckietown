@@ -60,7 +60,7 @@ def pose2(data):
 def  listener():
 
     # Initialize the node
-    rospy.init_node('aruco_duckie')
+    rospy.init_node('aruco_duckie_2')
     
     # Set the distances (can evetually make this ros params?)
     global min_dist_lane
@@ -69,7 +69,7 @@ def  listener():
     min_dist_road = .4
 
     # Set up the publishers
-    global pub_tag_2 pub_tag_1
+    global pub_tag_2, pub_tag_1
     pub_tag_1 = rospy.Publisher('/howard17/obstacle_safety_node/lane_blocked', BoolStamped, queue_size=1)
     pub_tag_2 = rospy.Publisher('/howard17/obstacle_safety_node/road_blocked', BoolStamped, queue_size=1)
 

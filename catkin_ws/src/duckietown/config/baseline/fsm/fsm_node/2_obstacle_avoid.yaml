@@ -14,28 +14,25 @@ events: #Maps from subscribing topic to signal ids
     topic: "open_loop_intersection_control_node/intersection_done"
     msg_type: "BoolStamped"
     trigger: True
-  turn_around:
-    topic: "obstacle_safety_node/turn_around"
+  road_blocked:
+    topic: "obstacle_safety_node/road_blocked"
     msg_type: "BoolStamped"
     trigger: True
-  done_turn_around:
-    topic: "obstacle_safety_node/turn_around"
+  done_road_blocked:
+    topic: "obstacle_safety_node/road_blocked"
     msg_type: "BoolStamped"
     trigger: False
-  go_around:
-    topic: "obstacle_safety_node/go_around"
+  lane_blocked:
+    topic: "obstacle_safety_node/lane_blocked"
     msg_type: "BoolStamped"
     trigger: True
-  go_around_done:
-    topic: "obstacle_safety_node/go_around"
+  lane_blocked_done:
+    topic: "obstacle_safety_node/lane_blocked"
     msg_type: "BoolStamped"
     trigger: False
 
 # Define global transitions. Available from all states.
-global_transitions:
-  joystick_override_on: "JOYSTICK_CONTROL"
-  parallel_autonomy_on: "PARALLEL_AUTONOMY"
-  parallel_autonomy_off: "JOYSTICK_CONTROL"
+#global_transitions:
 
 # Define nodes 
 nodes:
@@ -56,8 +53,8 @@ states:
   LANE_FOLLOWING:
     transitions:
       at_stop_line: "INTERSECTION_CONTROL"
-      go_around: "GO_AROUND"
-      turn_around: "TURN_AROUND"
+      lane_blocked: "GO_AROUND"
+      road_blocked: "TURN_AROUND"
     active_nodes:
       - lane_filter_node
       - line_detector_node

@@ -6,7 +6,7 @@
     <!-- <arg name="testing" default="false" doc="using for test purposes." /> -->
 
     <arg name="pkg_name" value="aruco_tags"/>
-    <arg name="node_name" default="2_aruco_duckie"/>
+    <arg name="node_name" default="aruco_duckie_2"/>
 
     <group ns="$(arg veh)">        
         <!-- run local -->
