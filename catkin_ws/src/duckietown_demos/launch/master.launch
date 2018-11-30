@@ -48,11 +48,15 @@
 	<arg name="/lane_following/lane_controller" default="true"/>
 
 	<arg name="fsm" default="true"/>
-
+	
+	<!-- For simple stop -->
 	<arg name="obstacle_avoidance" default="false"/>
 	<arg name="/obstacle_avoidance/simple_stop" default="true"/>
 	<arg name="/obstacle_avoidance/detection" default="true"/>
 	<arg name="/obstacle_avoidance/safety" default="true"/>
+
+	<!-- For go around and turn around -->
+	<arg name="2_obstacle_avoidance" default="false"/>
 
 	<arg name="vehicle_avoidance" default="false"/>
 	<arg name="/vehicle_avoidance/detection" default="true" />
@@ -315,7 +319,8 @@
 
 	<!-- Start Obstacle Avoidance -->
 	<group if="$(arg obstacle_avoidance)">
-		
+		<!-- Currently only for use with aruco tags. Turns off object detection and safety, 
+		keeps on the simple stop controller, and turns on aruco_duckie.-->		
 		<!-- Object Detection -->
 		<!--
 		<group if="$(arg /obstacle_avoidance/detection)">
@@ -329,18 +334,16 @@
 		-->
 
 		<!-- Object Safety -->
+		<!--
 		<group if="$(arg /obstacle_avoidance/safety)">
-			<!--
 			<remap from="obstacle_safety_node/detection_list" to="static_object_detector_node/detection_list"/>
 			<include file="$(find mdoap)/launch/obstacle_safety_node.launch">
 				<arg name="veh" value="$(arg veh)"/>
 				<arg name="config" value="$(arg config)"/>
 				<arg name="param_file_name" value="$(arg param_file_name)"/>
 			</include>
-			-->
-			<include file="$(find aruco_tags)/launch/aruco_duckie.launch">
-			</include>
 		</group>
+		-->
 
 		<!-- Simple Stop Controller -->
 		<group if="$(arg /obstacle_avoidance/simple_stop)">
@@ -351,7 +354,17 @@
 				<arg name="param_file_name" value="$(arg param_file_name)"/>
 			</include>
 		</group>
+
+		<include file="$(find aruco_tags)/launch/aruco_duckie.launch">
+		</include>
+				
 	</group> 
+
+	<!-- Start 2 Obstalce Avoidance (turn around/go around obstacles instead of just stopping)-->
+	<group if="$(arg 2_obstacle_avoidance)">
+		<include file=$(find aruco_tags)/launch/2_aruco_duckie.launch">
+		</include>
+	</group>
 
 	<!-- Start Vehicle Avoidance -->
 	<group if="$(arg vehicle_avoidance)">

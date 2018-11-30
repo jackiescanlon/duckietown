@@ -70,8 +70,8 @@ def  listener():
 
     # Set up the publishers
     global pub_tag_2 pub_tag_1
-    pub_tag_1 = rospy.Publisher('/howard17/obstacle_safety_node/pub_tag_1', BoolStamped, queue_size=1)
-    pub_tag_2 = rospy.Publisher('/howard17/obstacle_safety_node/pub_tag_2', BoolStamped, queue_size=1)
+    pub_tag_1 = rospy.Publisher('/howard17/obstacle_safety_node/lane_blocked', BoolStamped, queue_size=1)
+    pub_tag_2 = rospy.Publisher('/howard17/obstacle_safety_node/road_blocked', BoolStamped, queue_size=1)
 
     # Subscribe to the nodes that give poses of tags
     rospy.Subscriber('/aruco_double/pose', Pose, pose)
