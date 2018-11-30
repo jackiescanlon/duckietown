@@ -1,20 +1,20 @@
 #!/usr/bin/env python
-# Commands the duckie to go around an obstacle
+# Commands the duckie to turn around when it sees an obstacle blocking road
 
 import rospy
 from std_msgs.msg import String
 from duckietown_msgs.msg import BoolStamped, Twist2DStamped
 import copy
 
-# Runs when the lane is blocked
+# Runs when the road is blocked
 def control_car(data):
 
-    # Only run when the lane is blocked
+    # Only run when the road is blocked
     if data.data == True:
-	global pub_lane_blocked, pub_cmd
+	global pub_road_blocked, pub_cmd
     
     	# Array of the t,v,w commands
-    	turns = [ [.6, .43, 2.896], [.6, .43, -2.896], [1, .43, 0], [.6, .43, -2.896], [.6, .43, 2.896] ]
+    	turns = [ [1.5, 0, 4] ]
 
     	# Create a list of the t,v,w commands to go around
     	manuever = list()
@@ -30,26 +30,26 @@ def control_car(data):
 	        cmd.header.stamp = rospy.Time.now()
 	        pub_cmd.publish(cmd)
 
-   	# Tell fsm that we are done going around
+   	# Tell fsm that we are done turning around
     	b = BoolStamped()
     	b.stamp = rospy.Time.now()
     	b.data = False
 
-    	# Publish to the lane_blocked topic to be read by fsm state
-    	pub_lane_blocked.publish(b)
+    	# Publish to the road_blocked topic to be read by fsm state
+    	pub_road_blocked.publish(b)
 
 def  start():
 
     # Initialize the node
-    rospy.init_node('go_around')
+    rospy.init_node('turn_around')
 
     # Set up the publisher
-    global pub_lane_blocked
-    pub_lane_blocked = rospy.Publisher('/howard17/obstacle_safety_node/lane_blocked', BoolStamped, queue_size=1)
+    global pub_road_blocked
+    pub_road_blocked = rospy.Publisher('/howard17/obstacle_safety_node/road_blocked', BoolStamped, queue_size=1)
     pub_cmd = rospy.Publisher('howard17/lane_controller_node/car_cmd', BoolStamped, queue_size=1)
     
-    # Subscribe to lane_blocked
-    rospy.Subscriber('/howard17/obstacle_safety_node/lane_blocked', BoolStamped, control_car)
+    # Subscribe to road_blocked
+    rospy.Subscriber('/howard17/obstacle_safety_node/road_blocked', BoolStamped, control_car)
  
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
