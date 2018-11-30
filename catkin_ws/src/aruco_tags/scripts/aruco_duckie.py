@@ -103,9 +103,9 @@ def listener():
     
     # Set the distances (can evetually make this ros params?)
     global min_dist_lane
-    min_dist_lane = .4
+    min_dist_lane = .6
     global min_dist_road
-    min_dist_road = .4
+    min_dist_road = .6
 
     # Keeps track of how many seconds have gone by since
     # we last heard a published message
