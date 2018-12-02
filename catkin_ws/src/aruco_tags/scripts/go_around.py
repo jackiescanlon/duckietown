@@ -44,9 +44,9 @@ def  start():
     rospy.init_node('go_around')
 
     # Set up the publisher
-    global pub_lane_blocked
+    global pub_lane_blocked, pub_cmd
     pub_lane_blocked = rospy.Publisher('/howard17/obstacle_safety_node/lane_blocked', BoolStamped, queue_size=1)
-    pub_cmd = rospy.Publisher('howard17/wheels_driver_node/wheels_cmd', BoolStamped, queue_size=1)
+    pub_cmd = rospy.Publisher('howard17/wheels_driver_node/wheels_cmd', Twist2DStamped, queue_size=1)
     
     # Subscribe to lane_blocked
     rospy.Subscriber('/howard17/obstacle_safety_node/lane_blocked', BoolStamped, control_car)
