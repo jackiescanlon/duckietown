@@ -13,6 +13,6 @@
 		<arg name="navigation" default="true" />
 		<arg name="/navigation/apriltags_random" value="false"/>
 		<arg name="/navigation/intersection_control" default="true" />
-		<arg name="fsm_file_name" value="3_obstacle_avoid" />
+		<arg name="fsm_file_name" value="2_obstacle_avoid" />
 	</include>
 </launch>
