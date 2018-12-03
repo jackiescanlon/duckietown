@@ -57,6 +57,9 @@
 
 	<!-- For go around and turn around -->
 	<arg name="2_obstacle_avoidance" default="false"/>
+	
+	<!-- For go around, turn around, stop at stop lines -->
+	<arg name="3_obstacle_avoidance" default="false"/>
 
 	<arg name="vehicle_avoidance" default="false"/>
 	<arg name="/vehicle_avoidance/detection" default="true" />
@@ -360,9 +363,15 @@
 				
 	</group> 
 
-	<!-- Start 2 Obstalce Avoidance (turn around/go around obstacles instead of just stopping)-->
+	<!-- Start 2 Obstacle Avoidance (turn around/go around obstacles instead of just stopping)-->
 	<group if="$(arg 2_obstacle_avoidance)">
 		<include file="$(find aruco_tags)/launch/2_aruco_duckie.launch">
+		</include>
+	</group>
+	
+	<!-- Start 3 Obstacle Avoidance (stop at stop lines and read specific turns from turn_type) -->
+	<group if="$(arg 3_obstacle_avoidance)">
+		<include file="$(find aruco_tags)/launch/3_aruco_duckie.launch">
 		</include>
 	</group>
 
