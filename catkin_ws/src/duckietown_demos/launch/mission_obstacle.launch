@@ -12,7 +12,7 @@
 		<arg name="navigation" value="true" />
 		<arg name="/navigation/apriltags_random" value="false"/>
 		<arg name="/navigation/intersection_control" value="true" />
-    <arg name="/navigation/path_observer" value="true" />
+    		<arg name="/navigation/path_observer" value="true" />
 		<arg name="fsm_file_name" value="mission_obstacle" />
 	</include>
 </launch>
