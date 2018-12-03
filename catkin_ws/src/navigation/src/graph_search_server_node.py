@@ -11,7 +11,7 @@ import numpy as np
 
 class graph_search_server():
     def __init__(self):
-        print 'Graph Search Service Started'
+        rospy.loginfo('Graph Search Service Started')
 
         # Input: csv file
         self.map_name = rospy.get_param('/map_name')
@@ -30,13 +30,13 @@ class graph_search_server():
         print "Map loaded successfully!\n"
 
         self.image_pub = rospy.Publisher("~map_graph",Image, queue_size = 1, latch=True)
-        '''self.bridge = CvBridge()
+        self.bridge = CvBridge()
 
         # Send graph through publisher
         self.duckietown_graph.draw(self.script_dir, highlight_edges=None, map_name = self.map_name)
         cv_image = cv2.imread(self.map_path + '.png', cv2.CV_LOAD_IMAGE_COLOR)
         overlay = self.prepImage(cv_image)
-        self.image_pub.publish(self.bridge.cv2_to_imgmsg(overlay, "bgr8"))'''
+        self.image_pub.publish(self.bridge.cv2_to_imgmsg(overlay, "bgr8"))
     
     def rparam2graph(self):
         return Graph(None, rospy.get_param("duckie_graph_nodes"), rospy.get_param("duckie_graph_edges"), set(rospy.get_param("duckie_graph_pos")))
@@ -59,10 +59,10 @@ class graph_search_server():
         #self.duckietown_problem.graph = self.duckietown_graph
         
         # Checking if nodes exists
-        #print self.duckietown_graph._nodes
+        rospy.loginfo(list( self.duckietown_graph._nodes)) #.nodes() ?
         if (req.source_node not in self.duckietown_graph) or (req.target_node not in self.duckietown_graph):
             print "Source or target node do not exist."
-            #self.publishImage(req, [])
+            self.publishImage(req, [])
             return GraphSearchResponse([])
 
         # Running A*
@@ -71,7 +71,7 @@ class graph_search_server():
         path = self.duckietown_problem.astar_search()
 
         # Publish graph solution
-        #self.publishImage(req, path)
+        self.publishImage(req, path)
 
         return GraphSearchResponse(path.actions)        
 
@@ -89,8 +89,9 @@ class graph_search_server():
         map_crop = map_img[16:556,29:408,:]
         map_resize = cv2.resize(map_crop,(cv_image.shape[1],955),interpolation=cv2.INTER_AREA)
         cv_image = cv_image[0:955,:,:]
-        cv_image = 255 - cv_image                                                                                                                                                                            
-        overlay = cv2.addWeighted(cv_image,0.65,map_resize,0.35,0)                                                                                                                                             
+        cv_image = 255 - cv_image
+	overlay = cv_image                                                                                                                                                                            
+        #overlay = cv2.addWeighted(cv_image,0.65,map_resize,0.35,0)                                                                                                                                             
         overlay = cv2.resize(overlay,(0,0),fx=0.9,fy=0.9,interpolation=cv2.INTER_AREA) 
         overlay *= 1.4
         return overlay
