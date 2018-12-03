@@ -20,15 +20,15 @@ class StopLineFilterNode(object):
         self.off_time      = self.setupParam("~off_time", 2)
         self.lanewidth = 0 # updated continuously below
 
-        self.state = "JOYSTICK_CONTROL"
+        self.state = "LANE_FOLLOWING"
         self.sleep = False
         ## publishers and subscribers
         self.sub_segs      = rospy.Subscriber("~segment_list", SegmentList, self.processSegments)
         self.sub_lane      = rospy.Subscriber("~lane_pose",LanePose, self.processLanePose)
         self.sub_mode      = rospy.Subscriber("fsm_node/mode",FSMState, self.processStateChange)
+	self.sub_switch    = rospy.Subscriber("stop_line_filter_node/switch", BoolStamped, self.cbSwitch)
         self.pub_stop_line_reading = rospy.Publisher("~stop_line_reading", StopLineReading, queue_size=1)
         self.pub_at_stop_line = rospy.Publisher("~at_stop_line", BoolStamped, queue_size=1)
-
 
         self.params_update = rospy.Timer(rospy.Duration.from_sec(1.0), self.updateParams)
 
@@ -43,6 +43,10 @@ class StopLineFilterNode(object):
         self.stop_distance = rospy.get_param("~stop_distance")
         self.min_segs      = rospy.get_param("~min_segs")
         self.off_time      = rospy.get_param("~off_time")
+
+
+    def processSwitch(self,data):
+	self.active = data.data
 
     def processStateChange(self, msg):
         if self.state == "INTERSECTION_CONTROL" and (msg.state == "LANE_FOLLOWING" or msg.state == "PARALLEL_AUTONOMY"):

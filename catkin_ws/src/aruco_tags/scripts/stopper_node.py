@@ -16,33 +16,37 @@ def control_car(data):
     if data.data == True:
     
     	# Array of the t,v,w commands
-    	turns = [ [3, 0, 0] ]
+#    	turns = [ [3, 0, 0] ]
 
     	# Create a list of the t,v,w commands to go around
-    	manuever = list()
-    	for turn in turns:
-    	    manuever.append((turn[0],Twist2DStamped(v=turn[1],omega=turn[2])))
+#    	manuever = list()
+#    	for turn in turns:
+#    	    manuever.append((turn[0],Twist2DStamped(v=turn[1],omega=turn[2])))
 
     	# Run each manuever (from open_loop_control_intersection_node code)
-    	for index, pair in enumerate(manuever):
-            cmd = copy.deepcopy(pair[1])
-	    start_time = rospy.Time.now()
-	    end_time = start_time + rospy.Duration.from_sec(pair[0])
-	    while rospy.Time.now() < end_time:
-	        cmd.header.stamp = rospy.Time.now()
-	        pub_cmd.publish(cmd)
+#    	for index, pair in enumerate(manuever):
+#            cmd = copy.deepcopy(pair[1])
+#	    start_time = rospy.Time.now()
+#	    end_time = start_time + rospy.Duration.from_sec(pair[0])
+#	    while rospy.Time.now() < end_time:
+#	        cmd.header.stamp = rospy.Time.now()
+#	        pub_cmd.publish(cmd)
+	
+	# First publish a stop for 2 seconds
+	pub_turn_type.publish(-1)
+	rospy.sleep(2)
 
-   	  # Tell the open loop intersection control the turn
-      point = counter%4
-      # If we're at the first turn, its a right
-      if point == 1:
-        turn_type = 2
-      # Otherwise its straight
-      else:
-        turn_type = 0
+   	# Tell the open loop intersection control the turn
+      	point = counter%4
+        # If we're at the second turn (0-3), its a right
+        if point == 1:
+            turn_type = 2
+        # Otherwise its straight
+        else:
+             turn_type = 1
         
-      pub_turn_type.publish(turn_type)
-
+        pub_turn_type.publish(turn_type)
+	counter +=1
 def start():
 
     # Initialize the node
