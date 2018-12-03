@@ -9,9 +9,6 @@
 		<arg name="/camera/raw" value="true"/>
 		<arg name="/lane_following/stop_line_filter" default="false" />
 		<arg name="2_obstacle_avoidance" value="true" />
-		<arg name="navigation" default="false" />
-		<arg name="/navigation/intersection_control" default="true" />
-		<arg name="/navigation/turning" default="true" />
 		<arg name="fsm_file_name" value="2_obstacle_avoid" />
 	</include>
 </launch>
