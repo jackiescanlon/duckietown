@@ -10,52 +10,60 @@ from duckietown_msgs.msg import BoolStamped
 # Runs when tag 1 is detected (tag 1 = obstacle blocking lane)
 def pose(data):
 
-    global min_dist_lane, pub_tag_1
+    global min_dist_lane, pub_tag_1, active
     
-    # Get the distance away from the duckiebot
-    dis = data.position.z
-    rospy.loginfo('Tag 1 (Obstacle blocking lane) detected.') 
+    if active:
 
-    # If its still far away enough, we're okay
-    if dis > min_dist_lane:
-        rospy.loginfo('Tag 1 is still far away enough: %s m', dis)
+        # Get the distance away from the duckiebot
+        dis = data.position.z
+        rospy.loginfo('Tag 1 (Obstacle blocking lane) detected.') 
+
+        # If its still far away enough, we're okay
+        if dis > min_dist_lane:
+             rospy.loginfo('Tag 1 is still far away enough: %s m', dis)
     
-    # If its too close, publish true to too_close
-    else:
-	# Set up a BoolStamped to publish
-	b = BoolStamped()
-	b.data = True
+        # If its too close, publish true to too_close
+        else:
+	    # Set up a BoolStamped to publish
+	    b = BoolStamped()
+	    b.data = True
 
-	# Print a message
-	rospy.loginfo('Tag 1 is too close: %s m', dis)
+	    # Print a message
+	    rospy.loginfo('Tag 1 is too close: %s m', dis)
 
-	# Publish to the pub_tag_1 topic to be read by fsm state
-	pub_tag_1.publish(b)
+	    # Publish to the pub_tag_1 topic to be read by fsm state
+	    pub_tag_1.publish(b)
 
 # Runs when tag 2 is detected (tag 2 = obstacle blocking road)
 def pose2(data):
+  
+    global min_dist_road, pub_tag_2, active
 
-    global min_dist_road, pub_tag_2
+    if active:
+	
+        # Get the distance away from the duckiebot
+        dis = data.position.z
+        rospy.loginfo('Tag 2 (Obstacle blocking road) detected.') 
 
-    # Get the distance away from the duckiebot
-    dis = data.position.z
-    rospy.loginfo('Tag 2 (Obstacle blocking road) detected.') 
-
-    # If we aren't too close yet, its okay
-    if dis > min_dist_road:
-        rospy.loginfo('Tag 2 is still far away enough: %s m', dis)
+        # If we aren't too close yet, its okay
+        if dis > min_dist_road:
+            rospy.loginfo('Tag 2 is still far away enough: %s m', dis)
     
-    # If we are too close, publish true to too_close
-    else:
-	# Set up a BoolStamped to publish
-        b = BoolStamped()
-        b.data = True
+        # If we are too close, publish true to too_close
+        else:
+	    # Set up a BoolStamped to publish
+            b = BoolStamped()
+            b.data = True
         
-	# Print a message
-	rospy.loginfo('Tag 2 is too close: %s m', dis)
+	    # Print a message
+	    rospy.loginfo('Tag 2 is too close: %s m', dis)
 
-	# Publish to the pub_tag_2 topic to be read by fsm state
-	pub_tag_2.publish(b)
+	    # Publish to the pub_tag_2 topic to be read by fsm state
+	    pub_tag_2.publish(b)
+
+def switch(data):
+    global active
+    active = data.data
 
 def  listener():
 
@@ -76,7 +84,11 @@ def  listener():
     # Subscribe to the nodes that give poses of tags
     rospy.Subscriber('/aruco_double/pose', Pose, pose)
     rospy.Subscriber('/aruco_double/pose2', Pose, pose2)
- 
+
+    # Subscribe to switch
+    rospy.Subscriber("/howard17/obstacle_safety_node/switch", BoolStamped, switch, queue_size=1)
+    global active
+
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
 

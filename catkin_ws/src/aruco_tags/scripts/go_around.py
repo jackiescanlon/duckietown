@@ -9,12 +9,14 @@ import copy
 # Runs when the lane is blocked
 def control_car(data):
 
+    global pub_lane_blocked, pub_cmd
+
     # Only run when the lane is blocked
     if data.data == True:
-	global pub_lane_blocked, pub_cmd
     
     	# Array of the t,v,w commands
-    	turns = [ [.6, .43, 2.896], [.6, .43, -2.896], [1, .43, 0], [.6, .43, -2.896], [.6, .43, 2.896] ]
+	# Middle command: [1, .43, 0]
+    	turns = [ [1.2, .25, 2], [1.2, .25, -2], [1, .25, -2], [.4, .25, 2] ]
 
     	# Create a list of the t,v,w commands to go around
     	manuever = list()
@@ -32,13 +34,13 @@ def control_car(data):
 
    	# Tell fsm that we are done going around
     	b = BoolStamped()
-    	b.stamp = rospy.Time.now()
+    	b.header.stamp = rospy.Time.now()
     	b.data = False
 
     	# Publish to the lane_blocked topic to be read by fsm state
     	pub_lane_blocked.publish(b)
 
-def  start():
+def start():
 
     # Initialize the node
     rospy.init_node('go_around')
@@ -46,8 +48,8 @@ def  start():
     # Set up the publisher
     global pub_lane_blocked, pub_cmd
     pub_lane_blocked = rospy.Publisher('/howard17/obstacle_safety_node/lane_blocked', BoolStamped, queue_size=1)
-    pub_cmd = rospy.Publisher('howard17/wheels_driver_node/wheels_cmd', Twist2DStamped, queue_size=1)
-    
+    pub_cmd = rospy.Publisher('/howard17/obstacle_safety_node/go_around_cmd', Twist2DStamped, queue_size=1)
+
     # Subscribe to lane_blocked
     rospy.Subscriber('/howard17/obstacle_safety_node/lane_blocked', BoolStamped, control_car)
  

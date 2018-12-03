@@ -6,6 +6,8 @@ source_topics: #Mapping for name to topics
   joystick: "joy_mapper_node/car_cmd"
   vehicle: "vehicle_avoidance_control_node/wheels_cmd"
   obstacle: "simple_stop_controller_node/control"
+  go_around: "obstacle_safety_node/go_around_cmd"
+  turn_around: "obstacle_safety_node/turn_around_cmd"
 mappings: #Mapping from FSMStates.state to names
   LANE_FOLLOWING: "lane"
   INTERSECTION_CONTROL: "intersection"
@@ -13,3 +15,5 @@ mappings: #Mapping from FSMStates.state to names
   JOYSTICK_CONTROL: "joystick"
   VEHICLE_AVOIDANCE: "vehicle"
   OBSTACLE_AVOID: "obstacle"
+  TURN_AROUND: "turn_around"
+  GO_AROUND: "go_around"

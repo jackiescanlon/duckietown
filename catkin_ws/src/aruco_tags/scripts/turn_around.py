@@ -14,7 +14,7 @@ def control_car(data):
 	global pub_road_blocked, pub_cmd
     
     	# Array of the t,v,w commands
-    	turns = [ [1.5, 0, 4] ]
+    	turns = [ [2, .15, 3] ]
 
     	# Create a list of the t,v,w commands to go around
     	manuever = list()
@@ -32,7 +32,7 @@ def control_car(data):
 
    	# Tell fsm that we are done turning around
     	b = BoolStamped()
-    	b.stamp = rospy.Time.now()
+    	b.header.stamp = rospy.Time.now()
     	b.data = False
 
     	# Publish to the road_blocked topic to be read by fsm state
@@ -44,12 +44,12 @@ def  start():
     rospy.init_node('turn_around')
 
     # Set up the publisher
-    global pub_road_blocked
-    pub_road_blocked = rospy.Publisher('/howard17/obstacle_safety_node/road_blocked', BoolStamped, queue_size=1)
-    pub_cmd = rospy.Publisher('howard17/wheels_driver_node/wheels_cmd', Twist2DStamped, queue_size=1)
+    global pub_road_blocked, pub_cmd
+    pub_road_blocked = rospy.Publisher('obstacle_safety_node/road_blocked', BoolStamped, queue_size=1)
+    pub_cmd = rospy.Publisher('obstacle_safety_node/turn_around_cmd', Twist2DStamped, queue_size=1)
     
     # Subscribe to road_blocked
-    rospy.Subscriber('/howard17/obstacle_safety_node/road_blocked', BoolStamped, control_car)
+    rospy.Subscriber('obstacle_safety_node/road_blocked', BoolStamped, control_car)
  
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
