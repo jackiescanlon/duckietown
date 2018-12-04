@@ -2,5 +2,5 @@
 initial_mode: LANE_FOLLOWING
 localization_mode: none
 trigger_mode: INTERSECTION_CONTROL
-reset_mode: LANE_FOLLOWING
+reset_mode: JOYSTICK_CONTROL
 stop_line_wait_time: 2.0

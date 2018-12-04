@@ -61,7 +61,7 @@ class graph_search_server():
         # Checking if nodes exists
         rospy.loginfo(list( self.duckietown_graph._nodes)) #.nodes() ?
         if (req.source_node not in self.duckietown_graph) or (req.target_node not in self.duckietown_graph):
-            print "Source or target node do not exist."
+            rospy.loginfo("Source or target node do not exist.")
             self.publishImage(req, [])
             return GraphSearchResponse([])
 

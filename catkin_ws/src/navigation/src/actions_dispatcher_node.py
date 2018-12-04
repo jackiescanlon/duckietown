@@ -15,11 +15,12 @@ class ActionsDispatcherNode():
         self.first_update = True
 
         self.actions = []
-
+	# I think all of these are set in the .yaml file... try commenting them out
         # Parameters:
-        self.fsm_mode = self.setupParameter("~initial_mode","JOYSTICK_CONTROL")
+        self.fsm_mode = self.setupParameter("~initial_mode","LANE_FOLLOWING")
         self.localization_mode = self.setupParameter("~localization_mode","LOCALIZATION")
         self.trigger_mode = self.setupParameter("~trigger_mode","INTERSECTION_CONTROL")
+	# Performs a reset so don't set to lane following
         self.reset_mode = self.setupParameter("~reset_mode","JOYSTICK_CONTROL")
         self.stop_line_wait_time = self.setupParameter("~stop_line_wait_time",2.0)
 
@@ -53,6 +54,7 @@ class ActionsDispatcherNode():
         if self.first_update == False and self.fsm_mode != self.trigger_mode:
             self.first_update = True
 
+	# If its the first update, and we're in intersection control, and ?? (actions ins't empty?)
         if self.first_update == True and self.fsm_mode == self.trigger_mode and self.actions:
             # Allow time for open loop controller to update state and allow duckiebot to stop at redline:
             rospy.sleep(self.stop_line_wait_time)
@@ -77,7 +79,7 @@ class ActionsDispatcherNode():
             self.firstUpdate = False
 
     def graph_search(self, data):
-        print 'Requesting map for src: ', data.source_node, ' and target: ', data.target_node
+        print('Requesting map for src: ', data.source_node, ' and target: ', data.target_node)
         rospy.wait_for_service('graph_search')
         try:
             graph_search = rospy.ServiceProxy('graph_search', GraphSearch)
