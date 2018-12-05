@@ -6,16 +6,10 @@ events: #Maps from subscribing topic to signal ids
     topic: "stop_line_filter_node/at_stop_line"
     msg_type: "BoolStamped"
     trigger: True
-
-# Not sure which one of these we need
   intersection_done:
     topic: "open_loop_intersection_control_node/intersection_done"
     msg_type: "BoolStamped"
     trigger: True
-#  intersection_done:
-#    topic: "logic_gate_node/intersection_done_and_not_parallel_autonomy"
-#    msg_type: "BoolStamped"
-#    trigger: True
   road_blocked:
     topic: "obstacle_safety_node/road_blocked"
     msg_type: "BoolStamped"
