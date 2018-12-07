@@ -88,7 +88,6 @@
 	<arg name="/navigation/apriltags_random" default="true"/>
 	<arg name="/navigation/random_sr_turns" default="false"/>
 	<arg name="/navigation/graph_planner" default="false"/>
-	<arg name="/navigation/path_observer" default="false"/>
 	<!-- NOTE: either apriltags_random or graph_planner but not both -->
 
 	<arg name="parallel_autonomy" default="false"/>
@@ -595,20 +594,6 @@
 				<arg name="config" value="$(arg config)"/>        
 				<arg name="param_file_name" value="$(arg fsm_file_name)"/>        
         		</include>
-		</group>
-		
-		
-		<group if="$(arg /navigation/path_observer)">
-			<remap from="path_observer_node/turn_type" to="actions_dispatcher_node/turn_type" />
-			<remap from="path_observer_node/road_blocked" to="obstacle_safety_node/road_blocked" /> <!-- remapping outputs since there are two different possible turn types -->
-			<!--<remap from="path_observer_node/plan_generated" to="/plan_generated" />-->
-			<remap from="path_observer_node/plan_request" to="actions_dispatcher_node/plan_request" />
-			
-			<include file="$(find navigation)/launch/path_observer_node.launch">      
-				<arg name="veh" value="$(arg veh)"/>
-				<arg name="config" value="$(arg config)"/>        
-				<arg name="param_file_name" value="$(arg param_file_name)"/>        
-			</include>
 		</group>
 		
 	</group>

@@ -8,6 +8,8 @@ from cv_bridge import CvBridge, CvBridgeError
 from navigation.srv import *
 from navigation.generate_duckietown_map import graph_creator
 import numpy as np
+from duckietown_msgs.msg import BoolStamped, SourceTargetNodes
+from std_msgs.msg import Int16
 
 class graph_search_server():
     def __init__(self):

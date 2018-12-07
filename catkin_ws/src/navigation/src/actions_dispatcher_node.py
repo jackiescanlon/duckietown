@@ -23,7 +23,8 @@ class ActionsDispatcherNode():
 	# Performs a reset so don't set to lane following
         self.reset_mode = self.setupParameter("~reset_mode","JOYSTICK_CONTROL")
         self.stop_line_wait_time = self.setupParameter("~stop_line_wait_time",2.0)
-
+	# Putting this in bc rqt isnt' working? need to figure out what was publishing this before
+	#self.veh = self.setupParameter("/veh", "howard17")
         # Subscribers:
         self.sub_mode = rospy.Subscriber("~fsm_mode", FSMState, self.updateMode, queue_size = 1)
         self.sub_plan_request = rospy.Subscriber("~plan_request", SourceTargetNodes, self.graph_search)
