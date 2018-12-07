@@ -1,3 +1,5 @@
+#Deprecated - code has been moved to graph_search_server_node
+
 
 import sys 
 import os
