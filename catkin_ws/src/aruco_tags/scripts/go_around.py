@@ -16,7 +16,7 @@ def control_car(data):
     
     	# Array of the t,v,w commands
 	# Middle command: [1, .43, 0]
-    	turns = [ [1.2, .25, 2], [1.2, .25, -2], [1, .25, -2], [.4, .25, 2] ]
+    	turns = [ [1.4, .25, 3], [1.4, .25, -3], [.4, .5, 0], [1, .25, -2], [.4, .25, 2] ]
 
     	# Create a list of the t,v,w commands to go around
     	manuever = list()

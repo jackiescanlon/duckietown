@@ -72,7 +72,7 @@ def  listener():
     
     # Set the distances (can evetually make this ros params?)
     global min_dist_lane
-    min_dist_lane = .4
+    min_dist_lane = .3
     global min_dist_road
     min_dist_road = .4
 
