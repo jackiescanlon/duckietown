@@ -62,10 +62,11 @@ class RQTNavigation(Plugin):
         self._widget.comboBoxStart.addItems(comboBoxList)
 
     def requestPlan(self):
+	print("RQT- Button Clicked")
         start_node = str(self._widget.comboBoxStart.currentText())
         target_node = str(self._widget.comboBoxDestination.currentText())
         self.pub.publish(SourceTargetNodes(start_node, target_node))
-        
+        print("RQT - Plan Requested")
 
     def shutdown_plugin(self):
         # TODO unregister all publishers here
