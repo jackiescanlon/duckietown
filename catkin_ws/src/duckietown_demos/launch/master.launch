@@ -581,7 +581,9 @@
 		<group if="$(arg /navigation/graph_planner)">
 			<remap from="actions_dispatcher_node/fsm_mode" to="fsm_node/mode" />
 			<remap from="actions_dispatcher_node/turn_type" to="open_loop_intersection_control_node/turn_type" /> <!-- remapping outputs since there are two different possible turn types -->
-
+			<remap from="graph_search_server_node/turn_type" to="open_loop_intersection_control_node/turn_type" />
+			<remap from="graph_search_server_node/plan_request" to="actions_dispatcher_node/plan_request" />
+			<remap from="graph_search_server_node/road_blocked" to="obstacle_safety_node/road_blocked" />
 			<include file="$(find navigation)/launch/graph_search_server_node.launch">
 				<arg name="map_name" value="$(arg map_name)"/>        
 				<arg name="veh" value="$(arg veh)"/>

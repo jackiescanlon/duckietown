@@ -14,5 +14,6 @@
 		<arg name="/navigation/intersection_control" value="true" />
 		<arg name="fsm_file_name" value="2_obstacle_avoid" />
 		<arg name="/navigation/graph_planner" value="true" />
+		<arg name="map_name" value="tiles_jec5312" />
 	</include>
 </launch>

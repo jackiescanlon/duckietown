@@ -72,9 +72,9 @@ def  listener():
     
     # Set the distances (can evetually make this ros params?)
     global min_dist_lane
-    min_dist_lane = .3
+    min_dist_lane = .4
     global min_dist_road
-    min_dist_road = .3
+    min_dist_road = .4
 
     # Set up the publishers
     global pub_tag_2, pub_tag_1
